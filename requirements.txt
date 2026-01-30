@@ -1,12 +1,10 @@
-streamlit
+flask
+flask-cors
 yfinance
 google-generativeai
 GoogleNews
-praw
+duckduckgo-search
+python-dotenv
+vaderSentiment
 pypdf
 youtube-transcript-api
-python-dotenv
-pandas
-plotly
-vaderSentiment
-duckduckgo-search
