@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-streamlit
-yfinance
-google-generativeai
-GoogleNews
-praw
-pypdf
-youtube-transcript-api
-python-dotenv
-pandas
-plotly
-vaderSentiment
-=======
 flask
 flask-cors
 yfinance
@@ -21,4 +8,3 @@ python-dotenv
 vaderSentiment
 pypdf
 youtube-transcript-api
->>>>>>> Frontend
