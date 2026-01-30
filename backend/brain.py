@@ -96,3 +96,49 @@ def generate_flashcard(ticker: str, user_context: dict, market_data: dict, deep_
         },
         "ai_explanation": "AI service unavailable. Falling back to logical analysis."
     }
+<<<<<<< HEAD
+=======
+
+class FinancialAnalyst:
+    def __init__(self):
+        load_dotenv()
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if api_key:
+            genai.configure(api_key=api_key)
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
+        else:
+            self.model = None
+
+    def analyze(self, context_str: str, query: str) -> dict:
+        """
+        Adapter method for unstructured text context
+        """
+        if not self.model:
+            # Return dummy structure matching expectation
+            return {
+                "verdict": "WAIT",
+                "reasons": ["API Key Missing", "Using Mock Fallback"]
+            }
+
+        prompt = f"""
+        Act as a hedge fund analyst.
+        CONTEXT: {context_str}
+        USER QUERY: {query}
+        
+        TASK: Return VALID JSON.
+        {{
+          "verdict": "BUY|SELL|WAIT",
+          "reasons": ["Reason 1", "Reason 2"]
+        }}
+        """
+        
+        try:
+            response = self.model.generate_content(prompt)
+            clean_text = response.text.replace("```json", "").replace("```", "").strip()
+            return json.loads(clean_text)
+        except:
+            return {
+                "verdict": "WAIT",
+                "reasons": ["AI Analysis Failed", "Try again later"]
+            }
+>>>>>>> Frontend
