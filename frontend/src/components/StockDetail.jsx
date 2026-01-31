@@ -236,6 +236,40 @@ const InsightCard = ({ card, isActive, progress }) => {
 const StockDetail = ({ ticker, onBack, analysisData, isLoading, error, onRetry }) => {
     const [activeCardIndex, setActiveCardIndex] = useState(0);
     const [cardProgress, setCardProgress] = useState(0);
+    const [selectedTimeframe, setSelectedTimeframe] = useState('1D');
+
+    // 📊 Chart paths for different timeframes (deterministic based on ticker)
+    const chartPaths = useMemo(() => {
+        if (!ticker) return {};
+        const hash = ticker.split('').reduce((acc, char, i) => acc + char.charCodeAt(0) * (i + 1), 0);
+
+        // Generate deterministic but varied paths for each timeframe
+        const generatePath = (seed) => {
+            const points = [];
+            let y = 120;
+            for (let x = 0; x <= 400; x += 20) {
+                const variation = ((hash * seed + x) % 60) - 30;
+                y = Math.max(20, Math.min(140, y + variation / 3));
+                points.push({ x, y });
+            }
+            // Smooth the path
+            let pathD = `M${points[0].x},${points[0].y}`;
+            for (let i = 1; i < points.length; i++) {
+                const cp = (points[i].x - points[i - 1].x) / 2;
+                pathD += ` C${points[i - 1].x + cp},${points[i - 1].y} ${points[i].x - cp},${points[i].y} ${points[i].x},${points[i].y}`;
+            }
+            return { line: pathD, fill: pathD + ' L400,150 L0,150 Z', endY: points[points.length - 1].y };
+        };
+
+        return {
+            '1D': generatePath(1),
+            '1W': generatePath(7),
+            '1M': generatePath(30),
+            '3M': generatePath(90),
+            '1Y': generatePath(365),
+            'ALL': generatePath(1000)
+        };
+    }, [ticker]);
 
     // 🔧 Cache fallback data with useMemo to prevent re-generation on every render
     const fallbackData = useMemo(() => getStockData(ticker), [ticker]);
@@ -571,32 +605,49 @@ const StockDetail = ({ ticker, onBack, analysisData, isLoading, error, onRetry }
 
                                 {/* Gradient fill under the line */}
                                 <path
-                                    d="M0,120 C20,115 50,125 80,120 C110,115 140,130 170,125 C200,120 210,100 220,100 L230,110 L240,105 L260,80 L280,85 L300,60 L330,65 L350,50 L380,55 L400,40 L400,150 L0,150 Z"
+                                    d={chartPaths[selectedTimeframe]?.fill || "M0,120 L400,120 L400,150 L0,150 Z"}
                                     fill="url(#chartGradient)"
+                                    className="transition-all duration-500"
                                 />
 
                                 {/* Main line with animation */}
                                 <path
-                                    d="M0,120 C20,115 50,125 80,120 C110,115 140,130 170,125 C200,120 210,100 220,100 L230,110 L240,105 L260,80 L280,85 L300,60 L330,65 L350,50 L380,55 L400,40"
+                                    d={chartPaths[selectedTimeframe]?.line || "M0,120 L400,120"}
                                     fill="none"
                                     stroke={strokeColor}
                                     strokeWidth="3"
                                     strokeLinecap="round"
-                                    className="chart-line-animated"
+                                    className="transition-all duration-500"
                                 />
 
                                 {/* End point with glow */}
-                                <circle cx="400" cy="40" r="6" fill={strokeColor} className="animate-pulse" />
-                                <circle cx="400" cy="40" r="3" fill="white" />
+                                <circle
+                                    cx="400"
+                                    cy={chartPaths[selectedTimeframe]?.endY || 120}
+                                    r="6"
+                                    fill={strokeColor}
+                                    className="animate-pulse transition-all duration-500"
+                                />
+                                <circle
+                                    cx="400"
+                                    cy={chartPaths[selectedTimeframe]?.endY || 120}
+                                    r="3"
+                                    fill="white"
+                                    className="transition-all duration-500"
+                                />
                             </svg>
                         </div>
 
                         {/* Timeframe Pills */}
                         <div className="flex justify-between font-bold text-xs text-gray-500 mt-4 pt-4 border-t border-gray-800">
-                            {['1D', '1W', '1M', '3M', '1Y', 'ALL'].map((tf, i) => (
+                            {['1D', '1W', '1M', '3M', '1Y', 'ALL'].map((tf) => (
                                 <button
                                     key={tf}
-                                    className={`px-4 py-2 rounded-lg transition-all ${i === 0 ? 'text-[#5ac53b] bg-[#5ac53b]/10 shadow-sm' : 'hover:bg-white/5'}`}
+                                    onClick={() => setSelectedTimeframe(tf)}
+                                    className={`px-4 py-2 rounded-lg transition-all ${selectedTimeframe === tf
+                                            ? 'text-[#5ac53b] bg-[#5ac53b]/10 shadow-sm'
+                                            : 'hover:bg-white/5'
+                                        }`}
                                 >
                                     {tf}
                                 </button>
@@ -623,13 +674,10 @@ const StockDetail = ({ ticker, onBack, analysisData, isLoading, error, onRetry }
                 </div>
             </div>
 
-            {/* 🔥 STICKY ACTION BUTTONS */}
+            {/* 🔥 STICKY ACTION BUTTON */}
             <div className="fixed bottom-0 left-0 right-0 p-4 bg-linear-to-t from-lando-bg via-lando-bg to-transparent z-50">
-                <div className="max-w-2xl mx-auto flex gap-3">
-                    <button className="flex-1 btn-sell py-4 rounded-2xl font-bold text-lg text-white">
-                        SELL
-                    </button>
-                    <button className="flex-1 btn-buy py-4 rounded-2xl font-bold text-lg text-black">
+                <div className="max-w-2xl mx-auto">
+                    <button className="w-full btn-buy py-4 rounded-2xl font-bold text-lg text-black">
                         BUY
                     </button>
                 </div>
