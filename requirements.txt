@@ -6,9 +6,9 @@ requests
 flask
 flask-cors
 yfinance
-openai
+google-generativeai
 GoogleNews
-duckduckgo-search
+duckduckgo-search>=6.0
 praw
 python-dotenv
 vaderSentiment
