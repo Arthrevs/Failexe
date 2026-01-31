@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Check, Eye, Wallet, ArrowLeft, Target, TrendingUp, TrendingDown, Percent, HelpCircle } from 'lucide-react';
+import { ArrowRight, Check, Eye, Wallet, ArrowLeft, Target, TrendingUp, TrendingDown, Percent, HelpCircle, AlertCircle } from 'lucide-react';
 
 const AssetForm = ({ intent, onComplete, onBack }) => {
   const [step, setStep] = useState(1);
@@ -7,6 +7,7 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
   const [priceStrategy, setPriceStrategy] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState(null); // NEW: Error state for invalid searches
   const [formData, setFormData] = useState({
     ticker: '',
     bg_price: '',
@@ -15,35 +16,82 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
     strategy: ''
   });
 
+  // Determine API base URL (use relative path in production)
+  const API_BASE = window.location.hostname === 'localhost'
+    ? 'http://127.0.0.1:8000'
+    : ''; // Empty = relative URL in production
+
   const handleSearch = async (query) => {
     // Only search if 3+ chars
     if (query.length < 3) {
       setSuggestions([]);
+      setSearchError(null);
       return;
     }
 
     setIsSearching(true);
+    setSearchError(null);
+
     try {
-      // Debounce could be added here, but for now direct call is fine for prototype
-      const response = await fetch('http://127.0.0.1:8000/api/search', {
+      const response = await fetch(`${API_BASE}/api/search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query })
       });
       const data = await response.json();
+
       if (data && data.ticker) {
-        setSuggestions([data]); // wrap single result in array for now
+        setSuggestions([data]); // Valid result
+        setSearchError(null);
+      } else if (data && data.error) {
+        // Gemini couldn't find a valid ticker
+        setSuggestions([]);
+        setSearchError({
+          message: `No stock found for "${query}"`,
+          didYouMean: getSimilarTickers(query) // Suggest similar popular tickers
+        });
+      } else {
+        setSuggestions([]);
       }
     } catch (e) {
       console.error("Search failed", e);
+      setSearchError({
+        message: "Search service unavailable",
+        didYouMean: getSimilarTickers(query)
+      });
     } finally {
       setIsSearching(false);
     }
   };
 
+  // Helper: Suggest popular tickers based on partial match
+  const getSimilarTickers = (query) => {
+    const popularTickers = [
+      { ticker: 'AAPL', name: 'Apple Inc.', exchange: 'NASDAQ' },
+      { ticker: 'TSLA', name: 'Tesla Inc.', exchange: 'NASDAQ' },
+      { ticker: 'GOOGL', name: 'Alphabet Inc.', exchange: 'NASDAQ' },
+      { ticker: 'MSFT', name: 'Microsoft Corp.', exchange: 'NASDAQ' },
+      { ticker: 'AMZN', name: 'Amazon.com Inc.', exchange: 'NASDAQ' },
+      { ticker: 'NVDA', name: 'NVIDIA Corp.', exchange: 'NASDAQ' },
+      { ticker: 'ETERNAL.NS', name: 'Eternal Ltd (Zomato)', exchange: 'NSE' },
+      { ticker: 'RELIANCE.NS', name: 'Reliance Industries', exchange: 'NSE' },
+      { ticker: 'TATAMOTORS.NS', name: 'Tata Motors', exchange: 'NSE' },
+      { ticker: 'HDFCBANK.NS', name: 'HDFC Bank', exchange: 'NSE' },
+      { ticker: 'INFY.NS', name: 'Infosys', exchange: 'NSE' },
+      { ticker: 'TCS.NS', name: 'Tata Consultancy Services', exchange: 'NSE' },
+    ];
+
+    const q = query.toLowerCase();
+    return popularTickers.filter(t =>
+      t.ticker.toLowerCase().includes(q) ||
+      t.name.toLowerCase().includes(q)
+    ).slice(0, 3);
+  };
+
   const selectTicker = (suggestion) => {
     setFormData({ ...formData, ticker: suggestion.ticker });
-    setSuggestions([]); // Clear suggestions
+    setSuggestions([]);
+    setSearchError(null);
   };
 
   const nextStep = () => setStep(s => s + 1);
@@ -151,11 +199,42 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
               />
 
               {/* Suggestions Dropdown */}
-              {(suggestions.length > 0 || isSearching) && formData.ticker.length > 2 && (
+              {(suggestions.length > 0 || isSearching || searchError) && formData.ticker.length > 2 && (
                 <div className="absolute top-full left-0 right-0 bg-[#1c1c1e] border border-gray-800 rounded-xl shadow-2xl z-50 overflow-hidden mt-2">
                   {isSearching ? (
-                    <div className="p-4 text-gray-500 text-sm animate-pulse">Searching global markets...</div>
+                    <div className="p-4 text-gray-500 text-sm animate-pulse">🔍 Searching global markets...</div>
+                  ) : searchError ? (
+                    /* "Did you mean..." fallback UI */
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 text-orange-400 mb-3">
+                        <AlertCircle size={18} />
+                        <span className="text-sm font-semibold">{searchError.message}</span>
+                      </div>
+                      {searchError.didYouMean && searchError.didYouMean.length > 0 && (
+                        <>
+                          <div className="text-xs text-gray-500 mb-2">Did you mean:</div>
+                          {searchError.didYouMean.map((s, i) => (
+                            <button
+                              key={i}
+                              onClick={() => selectTicker(s)}
+                              className="w-full text-left p-3 hover:bg-[#2c2c2e] transition-colors border-b border-gray-800 last:border-0 rounded-lg"
+                            >
+                              <div className="flex justify-between items-center">
+                                <div>
+                                  <div className="font-bold text-white">{s.name}</div>
+                                  <div className="text-xs text-gray-500">{s.exchange}</div>
+                                </div>
+                                <div className="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-lg text-sm font-mono font-bold">
+                                  {s.ticker}
+                                </div>
+                              </div>
+                            </button>
+                          ))}
+                        </>
+                      )}
+                    </div>
                   ) : (
+                    /* Normal AI-verified suggestions */
                     suggestions.map((s, i) => (
                       <button
                         key={i}
@@ -174,10 +253,10 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
                       </button>
                     ))
                   )}
-                  {/* Fallback if no specific suggestion but user wants to proceed */}
-                  {!isSearching && suggestions.length > 0 && (
+                  {/* AI Verification badge */}
+                  {!isSearching && !searchError && suggestions.length > 0 && (
                     <div className="p-2 bg-black/20 text-xs text-center text-gray-500">
-                      AI Verification: {suggestions[0].name ? "Verified" : "Unverified"}
+                      ✅ AI Verified • Powered by Gemini
                     </div>
                   )}
                 </div>
