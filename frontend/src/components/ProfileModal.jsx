@@ -41,7 +41,7 @@ const ProfileModal = ({ onClose, isOpen }) => {
                         <User size={30} className="text-gray-400" />
                         {status === 'verified' && (
                             <div className="absolute bottom-0 right-0 bg-[#5ac53b] rounded-full p-0.5 border-2 border-[#1c1c1e]">
-                                <Check size={10} className="text-black stroke-[3]" />
+                                <Check size={10} className="text-black stroke-3" />
                             </div>
                         )}
                     </div>
