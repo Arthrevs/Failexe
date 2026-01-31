@@ -11,51 +11,78 @@ from datetime import datetime
 
 
 # ============================================================================
-# 1. STOCK PRICE SCRAPER (yfinance)
+# 1. STOCK PRICE SCRAPER (yfinance + Twelve Data)
 # ============================================================================
 def get_stock_price(ticker: str) -> Dict:
     """
-    Fetch current stock price and metadata using yfinance.
-    Returns dict with price, change, currency, etc.
+    Fetch current stock price.
+    - Indian Stocks (.NS/.BO): Use yfinance (best for NSE/BSE)
+    - International (US/Global): Try Twelve Data first, fallback to yfinance
     """
+    ticker_upper = ticker.upper()
+    is_indian = ".NS" in ticker_upper or ".BO" in ticker_upper
+    
+    # 1. Try Twelve Data for International Stocks
+    if not is_indian:
+        twelve_data_key = os.getenv("TWELVE_DATA_API_KEY")
+        if twelve_data_key:
+            print(f"[SCRAPER] Fetching {ticker} from Twelve Data...")
+            td_data = get_price_twelve_data(ticker, twelve_data_key)
+            if td_data:
+                return td_data
+            print("[SCRAPER] Twelve Data failed, falling back to yfinance.")
+    
+    # 2. Fallback / Default: yfinance
     try:
         import yfinance as yf
         
         stock = yf.Ticker(ticker)
-        info = stock.info
-        
-        # Get current price
-        current_price = info.get('currentPrice') or info.get('regularMarketPrice') or info.get('previousClose')
-        
-        if current_price is None:
-            # Try getting from history
-            hist = stock.history(period="1d")
-            if not hist.empty:
-                current_price = round(hist['Close'].iloc[-1], 2)
-            else:
-                return {"error": "No price data available", "price": None}
-        
-        # Calculate change percentage
-        prev_close = info.get('previousClose') or info.get('regularMarketPreviousClose')
+        # fast_info is faster than info, but sometimes less detailed. Let's try info first.
+        try:
+            info = stock.info
+            current_price = info.get('currentPrice') or info.get('regularMarketPrice') or info.get('previousClose')
+            prev_close = info.get('previousClose') or info.get('regularMarketPreviousClose')
+            name = info.get('shortName') or info.get('longName') or ticker
+            market_cap = info.get('marketCap')
+            volume = info.get('volume')
+            day_high = info.get('dayHigh')
+            day_low = info.get('dayLow')
+            high_52 = info.get('fiftyTwoWeekHigh')
+            low_52 = info.get('fiftyTwoWeekLow')
+        except:
+             # Fallback if .info fails (common with yfinance limits)
+             hist = stock.history(period="1d")
+             if hist.empty:
+                 return {"error": "No price data available", "price": None}
+             current_price = float(hist['Close'].iloc[-1])
+             prev_close = float(hist['Open'].iloc[-1]) # Approximate
+             name = ticker
+             market_cap = "N/A"
+             volume = int(hist['Volume'].iloc[-1])
+             day_high = float(hist['High'].iloc[-1])
+             day_low = float(hist['Low'].iloc[-1])
+             high_52 = "N/A"
+             low_52 = "N/A"
+
+        # Calculate change
         change_percent = 0.0
         if prev_close and current_price:
             change_percent = round(((current_price - prev_close) / prev_close) * 100, 2)
         
-        # Determine currency
-        currency = "₹" if (".NS" in ticker.upper() or ".BO" in ticker.upper()) else "$"
+        currency = "₹" if is_indian else "$"
         
         return {
             "price": round(float(current_price), 2),
             "change_percent": change_percent,
             "is_up": change_percent >= 0,
             "currency": currency,
-            "name": info.get('shortName') or info.get('longName') or ticker,
-            "market_cap": info.get('marketCap'),
-            "volume": info.get('volume'),
-            "day_high": info.get('dayHigh'),
-            "day_low": info.get('dayLow'),
-            "52_week_high": info.get('fiftyTwoWeekHigh'),
-            "52_week_low": info.get('fiftyTwoWeekLow'),
+            "name": name,
+            "market_cap": market_cap,
+            "volume": volume,
+            "day_high": day_high,
+            "day_low": day_low,
+            "52_week_high": high_52,
+            "52_week_low": low_52,
         }
         
     except Exception as e:
@@ -63,8 +90,41 @@ def get_stock_price(ticker: str) -> Dict:
         return {
             "error": str(e),
             "price": None,
-            "currency": "₹" if (".NS" in ticker.upper() or ".BO" in ticker.upper()) else "$"
+            "currency": "₹" if is_indian else "$"
         }
+
+
+def get_price_twelve_data(ticker: str, api_key: str) -> Optional[Dict]:
+    """Fetch real-time price from Twelve Data API."""
+    try:
+        import requests
+        url = f"https://api.twelvedata.com/quote?symbol={ticker}&apikey={api_key}"
+        response = requests.get(url, timeout=5)
+        data = response.json()
+        
+        if "price" not in data:
+            print(f"[TwelveData] Error: {data.get('message', 'Unknown error')}")
+            return None
+            
+        current_price = float(data['price'])
+        change_percent = float(data.get('percent_change', 0))
+        
+        return {
+            "price": round(current_price, 2),
+            "change_percent": round(change_percent, 2),
+            "is_up": change_percent >= 0,
+            "currency": "$", # Twelve Data defaults to USD for US stocks
+            "name": data.get('name', ticker),
+            "market_cap": "N/A", # Basic quote endpoint doesn't return MCap
+            "volume": data.get('volume'),
+            "day_high": data.get('high'),
+            "day_low": data.get('low'),
+            "52_week_high": data.get('fifty_two_week', {}).get('high', "N/A"),
+            "52_week_low": data.get('fifty_two_week', {}).get('low', "N/A"),
+        }
+    except Exception as e:
+        print(f"[TwelveData] Exception: {e}")
+        return None
 
 
 # ============================================================================
