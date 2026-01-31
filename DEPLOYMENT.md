@@ -21,7 +21,7 @@ Your app is now configured for a "merged" deployment where the Python backend se
     - **Branch**: `main`
 5. **Environment Variables**:
    Add the following environment variables (copy from your `.env` file):
-    - `OPENAI_API_KEY`: `sk-proj-...`
+    - `GOOGLE_API_KEY`: `AIza...` (Your Gemini API Key)
     - `REDDIT_CLIENT_ID`: (If you have it)
     - `REDDIT_CLIENT_SECRET`: (If you have it)
 6. Click **Create Web Service**.
