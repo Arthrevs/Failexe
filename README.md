@@ -31,7 +31,9 @@ The project is architected using a decoupled service model to ensure scalability
 Backend (The Brain): Deployed as a Web Service on Render, handling heavy computation and API calls.
 
 Frontend (The Face): Deployed as a Static Site on Render, optimized for low-latency user interactions.
+
 👥 The Team
+
 Arindam Nath - Backend Architect & AI Integration
 
 Debanga Shivam - Lead Frontend Engineer & UI Designer
