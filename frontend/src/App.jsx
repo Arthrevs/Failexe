@@ -7,8 +7,8 @@ import StockDetail from './components/StockDetail';
 import AILoadingScreen from './components/AILoadingScreen';
 
 // API Base URL - change this if your backend URL is different
-// API Base URL - set to localhost for local testing
-const API_BASE_URL = 'http://localhost:8000';
+// API Base URL - empty string for relative path (works for both local main.py and production)
+const API_BASE_URL = '';
 
 function App() {
   const [view, setView] = useState('landing'); // landing | wizard | loading | detail
