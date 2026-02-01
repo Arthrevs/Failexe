@@ -11,7 +11,7 @@ import os
 from dotenv import load_dotenv
 
 # Import backend logic
-from api.backend.scrapers import get_stock_price, get_news, get_reddit_posts
+from api.backend.scrapers import get_stock_price, get_news, get_reddit_posts, get_historical_data
 from api.backend.brain import FinancialAnalyst
 
 # Init
@@ -38,6 +38,7 @@ def analyze_stock(ticker: str = Query(..., description="Stock ticker symbol")):
     try:
         # 1. Fetch data
         price_data = get_stock_price(ticker)
+        graph_data = get_historical_data(ticker)
         news_data = get_news(ticker)
         reddit_data = get_reddit_posts(ticker)
 
@@ -64,6 +65,7 @@ def analyze_stock(ticker: str = Query(..., description="Stock ticker symbol")):
                 "news": news_data,
                 "social": reddit_data
             },
+            "graph_data": graph_data,
             "analysis": ai_result
         }
 
