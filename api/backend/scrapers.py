@@ -417,6 +417,82 @@ def fetch_all_data(ticker: str) -> Dict:
 
 
 # ============================================================================
+# 7. MOCK TWITTER SCRAPER (Flashcards)
+# ============================================================================
+def get_mock_tweets(ticker: str) -> List[Dict]:
+    """
+    Generate realistic mock tweets based on ticker context.
+    Returns: List of 5 tweet dicts.
+    """
+    import random
+    ticker = ticker.upper()
+    
+    # Context Detection
+    category = "GENERIC"
+    if any(x in ticker for x in ["BTC", "ETH", "DOGE", "SOL", "CRYPTO"]):
+        category = "CRYPTO"
+    elif any(x in ticker for x in ["ZOMATO", "TATA", "RELIANCE", "NIFTY", "HDFC", ".NS", ".BO"]):
+        category = "INDIAN"
+    elif any(x in ticker for x in ["AAPL", "TSLA", "NVDA", "MSFT", "GOOG", "AMZN"]):
+        category = "US_TECH"
+        
+    # Templates
+    templates = {
+        "CRYPTO": [
+            ("Just bought the dip on ${t}! 🚀 To the moon! #HODL", "CryptoKing_99"),
+            ("Chart looking bullish for ${t}. Resistance at 45k broken. 📈", "SatoshiFan"),
+            ("Why is everyone panic selling? Diamond hands only! 💎🙌", "WhaleWatcher"),
+            ("If ${t} hits the target today, I'm buying a Lambo. #WAGMI", "DogeFather"),
+            ("Bear market is over. ${t} season is starting now.", "AltcoinHero")
+        ],
+        "INDIAN": [
+            ("${t} quarterly results looking solid. Revenue up 15%! 🇮🇳", "DalalStreetWolf"),
+            ("Market is volatile but ${t} is a safe bet for long term.", "NiftyTrader"),
+            ("Just sold my house to buy more ${t}. Don't tell my wife. 🚀 #YOLO", "RiskTaker_07"),
+            ("Sensex down but ${t} showing strength. Good entry point?", "InvestIndia"),
+            ("Reliable sources say ${t} is expanding into new markets. Bullish.", "InsiderNews")
+        ],
+        "US_TECH": [
+            ("${t} AI integration is going to change the game. calls printed! 💸", "WallStBets_OG"),
+            ("Earnings beat expectations! ${t} to $500 confirmed?", "TechInvestor"),
+            ("Just watched the keynote. ${t} product line is insane.", "SiliconValleyGuy"),
+            ("Short sellers getting wrecked on ${t} today. You love to see it.", "MarketMover"),
+            ("Is it too late to buy ${t}? Asking for a friend.", "LateEntryly")
+        ],
+        "GENERIC": [
+            ("Market is crazy today. Watching ${t} closely. 👀", "DayTrader101"),
+            ("Big volume coming in for ${t}. Something is cooking.", "ChartMaster"),
+            ("Unpopular opinion: ${t} is undervalued right now.", "ContrarianView"),
+            ("Adding more ${t} to my portfolio. DCA is the way.", "LongTermHolder"),
+            ("Anyone else seeing this pattern on ${t}? 📉➡️📈", "TechnicalAnalyst")
+        ]
+    }
+    
+    selected_templates = templates.get(category, templates["GENERIC"])
+    # Ensure we have at least 5
+    while len(selected_templates) < 5:
+        selected_templates.append(templates["GENERIC"][0])
+        
+    random.shuffle(selected_templates)
+    tweets = []
+    
+    current_time = 0
+    
+    for text_template, user in selected_templates[:5]:
+        # randomize time slightly
+        current_time += random.randint(2, 15)
+        
+        tweets.append({
+            "user": user,
+            "handle": f"@{user.lower()}",
+            "text": text_template.replace("${t}", ticker),
+            "timestamp": f"{current_time}m ago",
+            "verified": random.choice([True, False])
+        })
+        
+    return tweets
+
+# ============================================================================
 # EXPORTS
 # ============================================================================
 __all__ = [
@@ -424,5 +500,6 @@ __all__ = [
     'get_historical_data',
     'get_news', 
     'get_reddit_posts',
+    'get_mock_tweets',
     'fetch_all_data'
 ]

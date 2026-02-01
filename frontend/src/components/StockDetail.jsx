@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ArrowUpRight, ArrowDownRight, Sparkles, AlertTriangle, TrendingUp, TrendingDown, Shield, Zap, BarChart3, Users, Target, Clock, Brain, MessageSquare, RefreshCw } from 'lucide-react';
 import SentimentMeter from './SentimentMeter';
+import TwitterDeck from './TwitterDeck';
 
 // 🔧 KNOWN INDIAN STOCKS (without suffix)
 const KNOWN_INDIAN_STOCKS = ['ETERNAL', 'ZOMATO', 'RELIANCE', 'TATA', 'INFOSYS', 'TCS', 'HDFC', 'ICICI', 'WIPRO', 'BAJAJ', 'MARUTI', 'BHARTI', 'ADANI', 'TATAMOTORS', 'SBIN', 'ITC', 'HDFCBANK', 'KOTAKBANK', 'LT', 'AXISBANK', 'SUNPHARMA', 'MOTHERSON', 'SAMVARDHANA'];
@@ -312,6 +313,7 @@ const StockDetail = ({ ticker, onBack, analysisData, isLoading, error, onRetry }
 
     // Derive data from API response or use fallback
     const priceData = analysisData?.market_data?.price || {};
+    const tweets = analysisData?.market_data?.tweets || [];
     const currentPrice = priceData.current || fallbackData.price;
     const previousClose = priceData.previous_close || (fallbackData.price - fallbackData.change);
     const priceChange = currentPrice && previousClose
@@ -706,9 +708,13 @@ const StockDetail = ({ ticker, onBack, analysisData, isLoading, error, onRetry }
                         <span className="text-green-400 font-mono font-bold">+{formatPrice(currentPrice * 0.8)} (+8.7%)</span>
                     </div>
                 </div>
+
+                {/* 🐦 SOCIAL DECK */}
+                <div className="mb-24">
+                    <TwitterDeck tweets={tweets} />
+                </div>
             </div>
 
-            {/* 🔥 STICKY ACTION BUTTON */}
             <div className="fixed bottom-0 left-0 right-0 p-4 bg-linear-to-t from-lando-bg via-lando-bg to-transparent z-50">
                 <div className="max-w-2xl mx-auto">
                     <button className="w-full btn-buy py-4 rounded-2xl font-bold text-lg text-black">

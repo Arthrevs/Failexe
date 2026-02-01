@@ -11,7 +11,7 @@ import os
 from dotenv import load_dotenv
 
 # Import backend logic
-from api.backend.scrapers import get_stock_price, get_news, get_reddit_posts, get_historical_data
+from api.backend.scrapers import get_stock_price, get_news, get_reddit_posts, get_historical_data, get_mock_tweets
 from api.backend.brain import FinancialAnalyst
 
 # Init
@@ -40,6 +40,7 @@ def analyze_stock(ticker: str = Query(..., description="Stock ticker symbol")):
         price_data = get_stock_price(ticker)
         graph_data = get_historical_data(ticker)
         news_data = get_news(ticker)
+        tweets_data = get_mock_tweets(ticker)
         reddit_data = get_reddit_posts(ticker)
 
         # 2. Prepare Context for AI
@@ -63,7 +64,8 @@ def analyze_stock(ticker: str = Query(..., description="Stock ticker symbol")):
             "market_data": {
                 "price": price_data,
                 "news": news_data,
-                "social": reddit_data
+                "social": reddit_data,
+                "tweets": tweets_data
             },
             "graph_data": graph_data,
             "analysis": ai_result
