@@ -34,7 +34,7 @@ const Background = ({ enableReactive = false }) => {
     <div
       ref={containerRef}
       className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
-      style={{ background: '#000' }}
+    // Removed hardcoded background: '#000' to let global theme take over
     >
       {/* Full screen dot grid */}
       {dots.map((dot) => {
@@ -83,7 +83,7 @@ const Background = ({ enableReactive = false }) => {
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 500px 400px at 50% 45%, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%)',
+          background: 'radial-gradient(ellipse 500px 400px at 50% 45%, rgba(var(--color-lando-bg-rgb), 0.95) 0%, rgba(var(--color-lando-bg-rgb), 0.7) 50%, transparent 100%)',
         }}
       />
     </div>

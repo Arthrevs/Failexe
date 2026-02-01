@@ -86,13 +86,13 @@ const LandingPage = ({ onNavigate }) => {
 
             {/* Hero Section */}
             <div className="text-center mb-12 relative">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lando-panel border border-white/10 mb-6">
                     <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                     <span className="text-xs text-gray-400 font-medium">Live Market Data</span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-                    <span className="text-white">Your Personal Hedge Fund Analyst.</span>
+                    <span>Your Personal Hedge Fund Analyst.</span>
                     <br />
                     <span className="text-gradient">For Free.</span>
                 </h1>
@@ -130,7 +130,7 @@ const LandingPage = ({ onNavigate }) => {
                                 <Icon size={20} strokeWidth={2.5} />
                             </div>
                             <div className="text-left flex-1">
-                                <div className="text-base font-semibold text-white">{option.title}</div>
+                                <div className="text-base font-semibold">{option.title}</div>
                                 <div className="text-sm text-gray-500">{option.subtitle}</div>
                             </div>
                             <ChevronRight size={18} className="text-gray-600 group-hover:translate-x-1 group-hover:text-white transition-all" />
@@ -142,7 +142,7 @@ const LandingPage = ({ onNavigate }) => {
             {/* How It Works Section */}
             <div className="w-full max-w-4xl mb-16">
                 <div className="text-center mb-8">
-                    <h2 className="text-2xl font-bold text-white mb-2">How It Works</h2>
+                    <h2 className="text-2xl font-bold mb-2">How It Works</h2>
                     <p className="text-gray-500 text-sm">Three steps to smarter decisions</p>
                 </div>
 
@@ -164,10 +164,10 @@ const LandingPage = ({ onNavigate }) => {
                                         <span className="text-xs font-bold text-gray-400">{index + 1}</span>
                                     </div>
 
-                                    <div className={`w-14 h-14 rounded-xl bg-white/5 flex items-center justify-center ${step.color} mb-4 transition-transform group-hover:scale-110`}>
+                                    <div className={`w-14 h-14 rounded-xl bg-lando-panel flex items-center justify-center ${step.color} mb-4 transition-transform group-hover:scale-110`}>
                                         <Icon size={28} strokeWidth={1.5} />
                                     </div>
-                                    <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
+                                    <h3 className="text-lg font-bold mb-2">{step.title}</h3>
                                     <p className="text-sm text-gray-500 leading-relaxed">{step.description}</p>
                                 </div>
 
@@ -189,10 +189,10 @@ const LandingPage = ({ onNavigate }) => {
                     const Icon = feature.icon;
                     return (
                         <div key={i} className="flex flex-col items-center group">
-                            <div className={`mb-3 p-3 rounded-xl bg-white/5 ${feature.color} transition-transform group-hover:scale-110`}>
+                            <div className={`mb-3 p-3 rounded-xl bg-lando-panel ${feature.color} transition-transform group-hover:scale-110`}>
                                 <Icon size={20} />
                             </div>
-                            <div className="text-2xl font-bold text-white mb-1">{feature.value}</div>
+                            <div className="text-2xl font-bold mb-1">{feature.value}</div>
                             <div className="text-xs text-gray-500 uppercase tracking-wider">{feature.label}</div>
                         </div>
                     );

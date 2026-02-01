@@ -715,13 +715,7 @@ const StockDetail = ({ ticker, onBack, analysisData, isLoading, error, onRetry }
                 </div>
             </div>
 
-            <div className="fixed bottom-0 left-0 right-0 p-4 bg-linear-to-t from-lando-bg via-lando-bg to-transparent z-50">
-                <div className="max-w-2xl mx-auto">
-                    <button className="w-full btn-buy py-4 rounded-2xl font-bold text-lg text-black">
-                        BUY
-                    </button>
-                </div>
-            </div>
+
         </div>
     );
 };

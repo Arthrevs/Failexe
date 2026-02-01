@@ -14,7 +14,13 @@ const Header = ({ onHome, showBack, onBack }) => {
     return (
         <div className="fixed top-0 left-0 right-0 z-50">
             {/* Main nav bar - Apple-style frosted glass */}
-            <div className="px-6 py-3 flex justify-between items-center bg-black/80 backdrop-blur-sm border-b border-white/5">
+            <div
+                className="px-6 py-3 flex justify-between items-center backdrop-blur-md border-b"
+                style={{
+                    backgroundColor: 'rgba(var(--color-card-bg-rgb), 0.8)',
+                    borderColor: 'var(--color-card-border)'
+                }}
+            >
                 <div className="flex items-center gap-8">
                     {showBack && (
                         <button
@@ -39,7 +45,7 @@ const Header = ({ onHome, showBack, onBack }) => {
                             {navItems.map((item) => (
                                 <button
                                     key={item}
-                                    className="text-sm text-gray-400 hover:text-white transition-colors font-medium"
+                                    className="text-sm text-[var(--color-text-main)] hover:opacity-70 transition-opacity font-medium"
                                 >
                                     {item}
                                 </button>
@@ -50,19 +56,19 @@ const Header = ({ onHome, showBack, onBack }) => {
 
                 <div className="flex items-center gap-2 relative">
                     {!showBack && (
-                        <button className="text-sm text-gray-400 hover:text-white transition-colors font-medium px-3 py-1.5">
+                        <button className="text-sm text-[var(--color-text-main)] hover:opacity-70 transition-opacity font-medium px-3 py-1.5">
                             Sign In
                         </button>
                     )}
                     <button
                         onClick={() => toggleModal('settings')}
-                        className={`p-2 rounded-full transition-colors ${openModal === 'settings' ? 'bg-white/10 text-white' : 'hover:bg-white/5 text-gray-400'}`}
+                        className={`p-2 rounded-full transition-colors ${openModal === 'settings' ? 'bg-[var(--color-text-main)] text-[var(--color-card-bg)]' : 'hover:bg-black/5 dark:hover:bg-white/5 text-[var(--color-text-main)]'}`}
                     >
                         <Settings size={18} />
                     </button>
                     <button
                         onClick={() => toggleModal('profile')}
-                        className={`p-2 rounded-full transition-colors ${openModal === 'profile' ? 'bg-white/10 text-white' : 'hover:bg-white/5 text-gray-400'}`}
+                        className={`p-2 rounded-full transition-colors ${openModal === 'profile' ? 'bg-[var(--color-text-main)] text-[var(--color-card-bg)]' : 'hover:bg-black/5 dark:hover:bg-white/5 text-[var(--color-text-main)]'}`}
                     >
                         <User size={18} />
                     </button>
