@@ -8,7 +8,10 @@ Run locally: uvicorn main:app --reload --port 8000
 
 import os
 import sys
+<<<<<<< HEAD
 import yfinance as yf
+=======
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 from datetime import datetime
 from typing import Optional
 
@@ -50,6 +53,7 @@ app.add_middleware(
 # MOCK DATA SAFETY NET (for demo reliability)
 # ============================================================================
 MOCK_DB = {
+<<<<<<< HEAD
     "ETERNAL.NS": {
         "ticker": "ETERNAL.NS",
         "price_data": {
@@ -79,6 +83,41 @@ MOCK_DB = {
     },
     "ZOMATO": {
         "redirect": "ETERNAL.NS"
+=======
+    "ZOMATO.NS": {
+        "ticker": "ZOMATO.NS",
+        "price_data": {
+            "price": 260.45,
+            "change_percent": 2.34,
+            "is_up": True,
+            "currency": "₹",
+            "name": "Zomato Limited",
+            "market_cap": 229000000000,
+            "52_week_high": 304.50,
+            "52_week_low": 108.30
+        },
+        "news": "1. [ET] Zomato Q3 profit jumps 280% on strong food delivery growth\n2. [Moneycontrol] Zomato Blinkit revenue surges 120% YoY\n3. [NDTV] Zomato hits all-time high as FIIs increase stake\n4. [Bloomberg] Zomato expands quick commerce with 10-min delivery\n5. [Reuters] Zomato CEO bullish on India's food delivery market",
+        "social": "1. [r/IndianStreetBets] (🟢 Bullish) Zomato flying! Target 300 soon | ⬆️ 542\n2. [r/IndianStreetBets] (🟢 Bullish) Zomato is the Amazon of India food | ⬆️ 328\n3. [r/stocks] (🟢 Bullish) Why Indian food delivery is the next big thing | ⬆️ 156",
+        "analysis": {
+            "verdict": "BUY",
+            "confidence": 87,
+            "reasons": [
+                "Strong Q3 results with 280% profit growth YoY",
+                "Blinkit quick commerce showing explosive 120% revenue growth",
+                "Positive institutional activity - FIIs increasing stake",
+                "Trading near 52-week high with strong momentum",
+                "Market leader in India's growing food delivery segment"
+            ],
+            "ai_explanation": "Zomato presents a compelling BUY opportunity. The company has achieved profitability inflection with Q3 profits surging 280%. Blinkit's quick commerce is a major growth driver. Strong institutional buying and bullish social sentiment (85%+) support the uptrend. Entry at current levels offers solid risk-reward for 6-12 month horizon.",
+            "risk_level": "MEDIUM",
+            "target_price": 300.00,
+            "timeframe": "Medium-term"
+        }
+    },
+    "ZOMATO": {
+        # Alias for ease of use
+        "redirect": "ZOMATO.NS"
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
     },
     "TSLA": {
         "ticker": "TSLA",
@@ -158,12 +197,17 @@ class AnalyzeResponse(BaseModel):
     news: str
     social: str
     analysis: dict
+<<<<<<< HEAD
     graph_data: Optional[dict] = None  # Real historical data
     source: str  # "mock" or "live"
 
 class SearchRequest(BaseModel):
     query: str
 
+=======
+    source: str  # "mock" or "live"
+
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 
 # ============================================================================
 # HELPER FUNCTIONS
@@ -176,6 +220,7 @@ def get_currency_symbol(ticker: str) -> str:
     return "$"
 
 
+<<<<<<< HEAD
 def get_historical_graph_data(ticker: str) -> dict:
     """Fetch 1 year of historical data for the chart."""
     try:
@@ -199,6 +244,8 @@ def get_historical_graph_data(ticker: str) -> dict:
         return {}
 
 
+=======
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 # ============================================================================
 # API ENDPOINTS
 # ============================================================================
@@ -272,7 +319,11 @@ async def analyze_stock(request: AnalyzeRequest):
         # 3. Fetch social sentiment
         social = get_reddit_posts(ticker)
         
+<<<<<<< HEAD
         # 4. Run AI Analysis
+=======
+        # 4. Run AI analysis
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
         analyst = FinancialAnalyst()
         
         context = f"""
@@ -296,10 +347,14 @@ Additional Data:
 - Volume: {price_data.get('volume', 'N/A')}
 """
         
+<<<<<<< HEAD
         analysis_result = analyst.analyze(context)
         
         # 5. Fetch Graph Data (Real)
         graph_data = get_historical_graph_data(ticker)
+=======
+        analysis = analyst.analyze(context)
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
         
         return AnalyzeResponse(
             success=True,
@@ -309,11 +364,20 @@ Additional Data:
             price_data=price_data,
             news=news,
             social=social,
+<<<<<<< HEAD
             analysis=analysis_result,
             graph_data=graph_data,  # Include real graph data
             source="live"
         )
         
+=======
+            analysis=analysis,
+            source="live"
+        )
+        
+    except HTTPException:
+        raise
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
     except Exception as e:
         print(f"[API ERROR] {ticker}: {str(e)}")
         
@@ -339,6 +403,7 @@ Additional Data:
         )
 
 
+<<<<<<< HEAD
 @app.post("/api/identity")
 async def get_ticker_identity(request: AnalyzeRequest):
     """
@@ -376,6 +441,8 @@ async def search_ticker(request: SearchRequest):
     return result
 
 
+=======
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 @app.get("/api/analyze/{ticker}")
 async def analyze_stock_get(ticker: str):
     """GET endpoint for easy browser testing."""
@@ -403,4 +470,8 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=port,
         reload=True
+<<<<<<< HEAD
     )
+=======
+    )
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b

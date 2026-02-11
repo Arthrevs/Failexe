@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { ArrowRight, Check, Eye, Wallet, ArrowLeft, Target, TrendingUp, TrendingDown, Percent, HelpCircle, AlertCircle } from 'lucide-react';
 import FluidBackground from './landing/FluidBackground';
 import AnimatedWallet from './AnimatedWallet';
 import AnimatedEye from './AnimatedEye';
 import RippleButton from './RippleButton';
+=======
+import { ArrowRight, Check, Eye, Wallet, ArrowLeft, Target, TrendingUp, TrendingDown, Percent, HelpCircle } from 'lucide-react';
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 
 const AssetForm = ({ intent, onComplete, onBack }) => {
   const [step, setStep] = useState(1);
   const [isOwner, setIsOwner] = useState(false);
   const [priceStrategy, setPriceStrategy] = useState(null);
+<<<<<<< HEAD
   const [suggestions, setSuggestions] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null); // Track which ownership card is hovered
   const [hoveredStrategy, setHoveredStrategy] = useState(null); // Track which entry strategy card is hovered
+=======
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
   const [formData, setFormData] = useState({
     ticker: '',
     bg_price: '',
@@ -22,6 +29,7 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
     strategy: ''
   });
 
+<<<<<<< HEAD
   // Determine API base URL (use relative path in production)
   const API_BASE = window.location.hostname === 'localhost'
     ? 'http://127.0.0.1:8000'
@@ -100,6 +108,8 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
     setSearchError(null);
   };
 
+=======
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
   const nextStep = () => setStep(s => s + 1);
   const prevStep = () => setStep(s => Math.max(1, s - 1));
 
@@ -163,6 +173,7 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
   ];
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex flex-col justify-center items-center relative z-10 px-4 pt-24 overflow-hidden">
       {/* Background */}
       <FluidBackground />
@@ -171,13 +182,24 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
       <button
         onClick={step === 1 ? onBack : prevStep}
         className="fixed top-20 left-6 flex items-center gap-2 text-gray-400 hover:text-white transition-colors z-50"
+=======
+    <div className="min-h-screen flex flex-col justify-center items-center relative z-10 px-4 pt-24">
+      {/* Back Button */}
+      <button
+        onClick={step === 1 ? onBack : prevStep}
+        className="fixed top-20 left-6 flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
       >
         <ArrowLeft size={20} />
         <span className="text-sm font-semibold">Back</span>
       </button>
 
       {/* Progress Indicator */}
+<<<<<<< HEAD
       <div className="fixed top-20 right-6 flex gap-1 z-50">
+=======
+      <div className="fixed top-20 right-6 flex gap-1">
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
         {[1, 2, 3, 4, 5].map(i => (
           <div
             key={i}
@@ -187,6 +209,7 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
         ))}
       </div>
 
+<<<<<<< HEAD
       <div className="w-full max-w-xl z-10 relative">
         {/* STEP 1: COMPANY SEARCH */}
         {step === 1 && (
@@ -289,12 +312,37 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
                   </RippleButton>
                 ))}
               </div>
+=======
+      <div className="w-full max-w-xl">
+        {/* STEP 1: COMPANY SEARCH */}
+        {step === 1 && (
+          <div className="rh-card p-10 fade-in">
+            <h2 className="text-3xl font-bold mb-2">Which asset?</h2>
+            <p className="text-gray-500 mb-6">Enter the ticker symbol or company name</p>
+            <input
+              autoFocus
+              type="text"
+              placeholder="e.g. AAPL, TSLA, NVDA"
+              value={formData.ticker}
+              onChange={e => setFormData({ ...formData, ticker: e.target.value.toUpperCase() })}
+              className="w-full bg-transparent border-b-2 border-gray-700 text-3xl font-mono text-[#5ac53b] focus:border-[#5ac53b] focus:outline-none py-2 mb-8 uppercase placeholder-gray-800"
+            />
+            <div className="flex justify-end">
+              <button
+                disabled={!formData.ticker}
+                onClick={nextStep}
+                className="rh-button flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                NEXT <ArrowRight size={18} />
+              </button>
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
             </div>
           </div>
         )}
 
         {/* STEP 2: OWNERSHIP CHECK */}
         {step === 2 && (
+<<<<<<< HEAD
           <div className="rh-card p-10 text-center fade-in bg-black/10 backdrop-blur-[20px] border border-white/10 rounded-[32px]">
             <h2 className="text-3xl font-bold mb-2 text-white">Current Status</h2>
             <p className="text-gray-500 mb-8">Do you already own this asset</p>
@@ -342,6 +390,29 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
                   <div className="font-bold text-lg mb-1 text-white">Just Watching</div>
                   <div className="text-xs text-gray-400">Track without owning</div>
                 </div>
+=======
+          <div className="rh-card p-10 text-center fade-in">
+            <h2 className="text-3xl font-bold mb-2">Current Status?</h2>
+            <p className="text-gray-500 mb-8">Do you already own this asset?</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                onClick={() => handleOwnerSelection(true)}
+                className="p-8 rounded-xl border border-gray-800 hover:bg-[#2c2c2e] hover:border-[#5ac53b] group transition-all"
+              >
+                <Wallet size={40} className="mx-auto mb-4 text-gray-500 group-hover:text-[#5ac53b] transition-colors" />
+                <div className="font-bold text-lg mb-1">I Hold This</div>
+                <div className="text-xs text-gray-400">Add to my portfolio</div>
+              </button>
+
+              <button
+                onClick={() => handleOwnerSelection(false)}
+                className="p-8 rounded-xl border border-gray-800 hover:bg-[#2c2c2e] hover:border-blue-400 group transition-all"
+              >
+                <Eye size={40} className="mx-auto mb-4 text-gray-500 group-hover:text-blue-400 transition-colors" />
+                <div className="font-bold text-lg mb-1">Just Watching</div>
+                <div className="text-xs text-gray-400">Track without owning</div>
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
               </button>
             </div>
           </div>
@@ -349,6 +420,7 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
 
         {/* STEP 3: PRICE STRATEGY (NEW!) */}
         {step === 3 && !isOwner && (
+<<<<<<< HEAD
           <div className="fade-in relative">
             {/* Animated Background Orbs */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -745,11 +817,38 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
                 }
               }
             `}</style>
+=======
+          <div className="rh-card p-10 fade-in">
+            <h2 className="text-3xl font-bold mb-2">Entry Strategy</h2>
+            <p className="text-gray-500 mb-8">How would you like to target your entry?</p>
+
+            <div className="space-y-3">
+              {priceOptions.map((option) => {
+                const Icon = option.icon;
+                return (
+                  <button
+                    key={option.id}
+                    onClick={() => handlePriceStrategy(option.id)}
+                    className={`w-full p-5 rounded-xl border border-gray-800 hover:bg-[#2c2c2e] ${option.hoverBorder} group transition-all flex items-center gap-4 text-left`}
+                  >
+                    <div className={`p-3 rounded-xl bg-black/30 ${option.color} group-hover:scale-110 transition-transform`}>
+                      <Icon size={24} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-bold text-lg mb-0.5">{option.title}</div>
+                      <div className="text-xs text-gray-500">{option.subtitle}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
           </div>
         )}
 
         {/* STEP 3 for Owners: Investment Details */}
         {step === 3 && isOwner && (
+<<<<<<< HEAD
           <div className="fade-in relative">
             {/* Premium Card with glassmorphism */}
             <div
@@ -896,13 +995,53 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
                 font-weight: 300;
               }
             `}</style>
+=======
+          <div className="rh-card p-10 fade-in">
+            <h2 className="text-3xl font-bold mb-2">Investment Details</h2>
+            <p className="text-gray-500 mb-6">Tell us about your position</p>
+
+            <div className="space-y-6 mb-8">
+              <div>
+                <label className="block text-gray-500 text-xs uppercase tracking-widest mb-2">Avg Buy Price</label>
+                <input
+                  autoFocus
+                  type="number"
+                  placeholder="e.g. 150.00"
+                  value={formData.bg_price}
+                  onChange={e => setFormData({ ...formData, bg_price: e.target.value })}
+                  className="rh-input w-full font-mono text-xl"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-500 text-xs uppercase tracking-widest mb-2">Units Owned</label>
+                <input
+                  type="number"
+                  placeholder="e.g. 10"
+                  value={formData.units}
+                  onChange={e => setFormData({ ...formData, units: e.target.value })}
+                  className="rh-input w-full font-mono text-xl"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <button onClick={() => setStep(5)} className="rh-button flex items-center gap-2">
+                NEXT <ArrowRight size={18} />
+              </button>
+            </div>
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
           </div>
         )}
 
         {/* STEP 4: SPECIFIC PRICE INPUT (only if user chose 'specific') */}
         {step === 4 && priceStrategy === 'specific' && (
+<<<<<<< HEAD
           <div className="rh-card p-10 fade-in bg-[#141419]/80 backdrop-blur-3xl border border-white/10 rounded-[32px]">
             <h2 className="text-3xl font-bold mb-2 text-white">Target Price</h2>
+=======
+          <div className="rh-card p-10 fade-in">
+            <h2 className="text-3xl font-bold mb-2">Target Price</h2>
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
             <p className="text-gray-500 mb-6">Enter your ideal entry point</p>
 
             <div className="mb-8">
@@ -913,7 +1052,11 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
                 placeholder="e.g. 165.00"
                 value={formData.target_price}
                 onChange={e => setFormData({ ...formData, target_price: e.target.value })}
+<<<<<<< HEAD
                 className="rh-input w-full font-mono text-2xl bg-black/20 border-gray-700 text-white"
+=======
+                className="rh-input w-full font-mono text-2xl"
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
               />
             </div>
 
@@ -927,6 +1070,7 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
 
         {/* STEP 5: STRATEGY SELECTION */}
         {step === 5 && (
+<<<<<<< HEAD
           <div className="fade-in relative">
             {/* Premium Card with glassmorphism */}
             <div
@@ -1253,6 +1397,34 @@ const AssetForm = ({ intent, onComplete, onBack }) => {
                 }
               }
             `}</style>
+=======
+          <div className="rh-card p-10 text-center fade-in">
+            <h2 className="text-3xl font-bold mb-2">Investment Goal?</h2>
+            <p className="text-gray-500 mb-8">What's your timeframe and approach?</p>
+
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {['Long Term', 'Swing Trade', 'Quick Scalp', 'Hedge'].map(strat => (
+                <button
+                  key={strat}
+                  onClick={() => setFormData({ ...formData, strategy: strat })}
+                  className={`p-4 rounded-xl border transition-all ${formData.strategy === strat
+                    ? 'bg-[#5ac53b]/20 border-[#5ac53b] text-[#5ac53b]'
+                    : 'border-gray-800 text-gray-400 hover:bg-[#2c2c2e]'
+                    }`}
+                >
+                  {strat}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={handleFinish}
+              disabled={!formData.strategy}
+              className="w-full rh-button py-4 text-lg font-black uppercase tracking-widest flex justify-center items-center gap-2 disabled:opacity-50"
+            >
+              <Check size={24} /> START {isOwner ? 'TRACKING' : 'WATCHING'}
+            </button>
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
           </div>
         )}
       </div>

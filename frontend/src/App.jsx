@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import Background from './components/Background';
+<<<<<<< HEAD
 
+=======
+import Header from './components/Header';
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 import LandingPage from './components/LandingPage';
 import AssetForm from './components/AssetForm';
 import StockDetail from './components/StockDetail';
@@ -91,8 +95,14 @@ function App() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen text-white font-sans selection:bg-lando-neon selection:text-black bg-black">
 
+=======
+    <div className="min-h-screen text-white font-sans selection:bg-lando-neon selection:text-black bg-[#050505] overflow-hidden">
+      <Background enableReactive={view === 'landing'} />
+      <Header onHome={goHome} showBack={view !== 'landing'} onBack={goBack} />
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 
       {view === 'landing' && (
         <LandingPage onNavigate={(dest, params) => startWizard(params.type)} />

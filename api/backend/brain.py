@@ -1,7 +1,11 @@
 """
 TrackBets Backend - AI Brain Module
 =====================================
+<<<<<<< HEAD
 Google Gemini-powered financial analysis with strict JSON output.
+=======
+OpenAI-powered financial analysis with strict JSON output.
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 """
 
 import os
@@ -9,7 +13,11 @@ import json
 import time
 from typing import Dict, Optional
 from dotenv import load_dotenv
+<<<<<<< HEAD
 import google.generativeai as genai
+=======
+from openai import OpenAI
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 
 load_dotenv()
 
@@ -33,7 +41,11 @@ def rule_based_verdict(market_data: dict) -> tuple:
 def generate_flashcard(ticker: str, user_context: dict, market_data: dict, deep_analysis: dict) -> dict:
     """Generate a flashcard with AI analysis or fallback."""
     
+<<<<<<< HEAD
     api_key = os.getenv("GOOGLE_API_KEY")
+=======
+    api_key = os.getenv("OPENAI_API_KEY")
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
     
     # Use Fallback if no key
     if not api_key:
@@ -48,9 +60,14 @@ def generate_flashcard(ticker: str, user_context: dict, market_data: dict, deep_
             "ai_explanation": "Verdict generated using rule-based metrics due to missing AI key."
         }
 
+<<<<<<< HEAD
     # Configure Gemini
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel("gemini-2.5-flash")
+=======
+    # Configure OpenAI
+    client = OpenAI(api_key=api_key)
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
     
     context_str = f"""
     STOCK: {ticker}
@@ -77,8 +94,21 @@ def generate_flashcard(ticker: str, user_context: dict, market_data: dict, deep_
     # Retry Logic (3 attempts)
     for attempt in range(3):
         try:
+<<<<<<< HEAD
             response = model.generate_content(prompt)
             clean_text = response.text.replace("```json", "").replace("```", "").strip()
+=======
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "You are a hedge fund analyst. Always respond with valid JSON only."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7,
+                max_tokens=1000
+            )
+            clean_text = response.choices[0].message.content.replace("```json", "").replace("```", "").strip()
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
             return json.loads(clean_text)
         except:
             time.sleep(1)
@@ -101,11 +131,16 @@ def generate_flashcard(ticker: str, user_context: dict, market_data: dict, deep_
 # ============================================================================
 class FinancialAnalyst:
     """
+<<<<<<< HEAD
     AI-powered financial analyst using Google Gemini 2.5 Flash.
+=======
+    AI-powered financial analyst using OpenAI GPT-4o-mini.
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
     Analyzes stock data and returns structured investment verdicts.
     """
     
     def __init__(self):
+<<<<<<< HEAD
         self.api_key = os.getenv("GOOGLE_API_KEY")
         self.model = None
         if self.api_key:
@@ -201,6 +236,15 @@ Target Ticker: {ticker}"""
             print(f"[BRAIN] Search error: {e}")
             return {"error": "Search failed"}
     
+=======
+        self.api_key = os.getenv("OPENAI_API_KEY")
+        self.client = None
+        if self.api_key:
+            self.client = OpenAI(api_key=self.api_key)
+        else:
+            print("[BRAIN] Warning: OPENAI_API_KEY not found in environment")
+
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
     def analyze(self, context: str, analysis_type: str = "Investment Decision") -> Dict:
         """
         Analyze financial data and return structured verdict.
@@ -212,8 +256,13 @@ Target Ticker: {ticker}"""
         Returns:
             Dict with verdict, confidence, reasons, and explanation
         """
+<<<<<<< HEAD
         if not self.model:
             return self._fallback_response("AI model not available - GOOGLE_API_KEY missing")
+=======
+        if not self.client:
+            return self._fallback_response("AI model not available - OPENAI_API_KEY missing")
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
         
         try:
             # System prompt enforcing strict JSON output
@@ -248,19 +297,39 @@ Guidelines:
 
 Remember: Respond with ONLY the JSON object, no other text."""
 
+<<<<<<< HEAD
             # Generate response using Gemini
             full_prompt = f"{system_prompt}\n\n{user_prompt}"
             response = self.model.generate_content(full_prompt)
             
             # Parse JSON from response
             return self._parse_response(response.text)
+=======
+            # Generate response using OpenAI
+            response = self.client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ],
+                temperature=0.7,
+                max_tokens=1024
+            )
+            
+            # Parse JSON from response
+            return self._parse_response(response.choices[0].message.content)
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
             
         except Exception as e:
             print(f"[BRAIN] Analysis error: {str(e)}")
             return self._fallback_response(str(e))
     
     def _parse_response(self, response_text: str) -> Dict:
+<<<<<<< HEAD
         """Parse Gemini response and extract JSON."""
+=======
+        """Parse OpenAI response and extract JSON."""
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
         try:
             # Clean the response (remove markdown if present)
             text = response_text.strip()
@@ -285,6 +354,7 @@ Remember: Respond with ONLY the JSON object, no other text."""
                     result[field] = self._get_default_value(field)
             
             # Normalize verdict
+<<<<<<< HEAD
             if "verdict" in result and isinstance(result["verdict"], str):
                 result["verdict"] = result["verdict"].upper()
                 if result["verdict"] not in ["BUY", "SELL", "HOLD"]:
@@ -293,6 +363,14 @@ Remember: Respond with ONLY the JSON object, no other text."""
             # Ensure confidence is integer 0-100
             if "confidence" in result:
                 result["confidence"] = max(0, min(100, int(result["confidence"])))
+=======
+            result["verdict"] = result["verdict"].upper()
+            if result["verdict"] not in ["BUY", "SELL", "HOLD"]:
+                result["verdict"] = "HOLD"
+            
+            # Ensure confidence is integer 0-100
+            result["confidence"] = max(0, min(100, int(result["confidence"])))
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
             
             return result
             

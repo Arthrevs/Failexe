@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Settings, User, ArrowLeft, Home } from 'lucide-react';
 import SettingsModal from './SettingsModal';
@@ -10,10 +11,18 @@ const Header = ({ onHome, showBack, onBack }) => {
     const toggleModal = (modalName) => {
         setOpenModal(prev => prev === modalName ? null : modalName);
     };
+=======
+import React from 'react';
+import { Settings, User, ArrowLeft, Home } from 'lucide-react';
+
+const Header = ({ onHome, showBack, onBack }) => {
+    const navItems = ['Products', 'Features', 'Pricing', 'About'];
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 
     return (
         <div className="fixed top-0 left-0 right-0 z-50">
             {/* Main nav bar - Apple-style frosted glass */}
+<<<<<<< HEAD
             <div
                 className="px-6 py-3 flex justify-between items-center backdrop-blur-md border-b"
                 style={{
@@ -21,6 +30,9 @@ const Header = ({ onHome, showBack, onBack }) => {
                     borderColor: 'var(--color-card-border)'
                 }}
             >
+=======
+            <div className="px-6 py-3 flex justify-between items-center bg-black/80 backdrop-blur-sm border-b border-white/5">
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
                 <div className="flex items-center gap-8">
                     {showBack && (
                         <button
@@ -45,7 +57,11 @@ const Header = ({ onHome, showBack, onBack }) => {
                             {navItems.map((item) => (
                                 <button
                                     key={item}
+<<<<<<< HEAD
                                     className="text-sm text-text-main hover:opacity-70 transition-opacity font-medium"
+=======
+                                    className="text-sm text-gray-400 hover:text-white transition-colors font-medium"
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
                                 >
                                     {item}
                                 </button>
@@ -54,6 +70,7 @@ const Header = ({ onHome, showBack, onBack }) => {
                     )}
                 </div>
 
+<<<<<<< HEAD
                 <div className="flex items-center gap-2 relative">
                     {!showBack && (
                         <button className="text-sm text-text-main hover:opacity-70 transition-opacity font-medium px-3 py-1.5">
@@ -76,6 +93,20 @@ const Header = ({ onHome, showBack, onBack }) => {
                     {/* Modals */}
                     <SettingsModal isOpen={openModal === 'settings'} onClose={() => setOpenModal(null)} />
                     <ProfileModal isOpen={openModal === 'profile'} onClose={() => setOpenModal(null)} />
+=======
+                <div className="flex items-center gap-2">
+                    {!showBack && (
+                        <button className="text-sm text-gray-400 hover:text-white transition-colors font-medium px-3 py-1.5">
+                            Sign In
+                        </button>
+                    )}
+                    <button className="p-2 rounded-full hover:bg-white/5 transition-colors">
+                        <Settings size={18} className="text-gray-400" />
+                    </button>
+                    <button className="p-2 rounded-full hover:bg-white/5 transition-colors">
+                        <User size={18} className="text-gray-400" />
+                    </button>
+>>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
                 </div>
             </div>
         </div>
