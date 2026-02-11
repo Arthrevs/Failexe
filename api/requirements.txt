@@ -1,0 +1,10 @@
+flask
+flask-cors
+yfinance
+openai
+GoogleNews
+duckduckgo-search
+python-dotenv
+vaderSentiment
+pypdf
+youtube-transcript-api
