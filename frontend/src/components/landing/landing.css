@@ -505,7 +505,9 @@ nav {
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     cursor: pointer;
-    min-height: 500px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
 }
 
 .liquid-bg {
@@ -579,6 +581,9 @@ nav {
 .card-content {
     position: relative;
     z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-icon {
@@ -693,7 +698,7 @@ nav {
 
 /* Card Buttons */
 .card-btn {
-    margin-top: 20px;
+    margin-top: auto;
     width: 100%;
     position: relative;
     padding: 12px 20px;
@@ -812,58 +817,7 @@ nav {
     cursor: pointer;
 }
 
-.projector-beam {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 60px;
-    background: linear-gradient(to bottom,
-            rgba(0, 255, 148, 0.4) 0%,
-            rgba(0, 255, 148, 0.3) 20%,
-            rgba(0, 255, 148, 0.2) 40%,
-            rgba(0, 255, 148, 0.1) 60%,
-            rgba(0, 255, 148, 0.05) 80%,
-            transparent 100%);
-    /* Pixelated effect using stepped gradients */
-    background-size: 100% 8px;
-    background-repeat: repeat-y;
-    clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);
-    z-index: 1;
-    animation: beamPulse 2s ease-in-out infinite;
-    pointer-events: none;
-}
 
-@keyframes beamPulse {
-
-    0%,
-    100% {
-        opacity: 0.6;
-        transform: translateX(-50%) scaleY(1);
-    }
-
-    50% {
-        opacity: 0.9;
-        transform: translateX(-50%) scaleY(1.05);
-    }
-}
-
-/* Projector scanlines for pixelated effect */
-.projector-beam::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(to bottom,
-            transparent 0px,
-            transparent 2px,
-            rgba(0, 0, 0, 0.3) 2px,
-            rgba(0, 0, 0, 0.3) 4px);
-    pointer-events: none;
-}
 
 .projector-ticker-wrapper {
     position: absolute;

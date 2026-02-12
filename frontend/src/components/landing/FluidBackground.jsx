@@ -55,7 +55,7 @@ const WaveMesh = () => {
 
 const FluidBackground = () => {
     return (
-        <div className="fixed inset-0 z-0 bg-black">
+        <div className="fixed inset-0 z-0">
             <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} intensity={1.5} color="#A0A0FF" />

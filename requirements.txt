@@ -1,4 +1,3 @@
-streamlit
 fastapi
 uvicorn
 python-multipart
@@ -7,8 +6,8 @@ requests
 flask
 flask-cors
 yfinance
-google-generativeai
 openai
+google-generativeai
 GoogleNews
 duckduckgo-search
 praw
@@ -18,3 +17,4 @@ pypdf
 youtube-transcript-api
 pandas
 plotly
+streamlit

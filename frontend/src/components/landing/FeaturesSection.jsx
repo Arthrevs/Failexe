@@ -70,7 +70,17 @@ const FeaturesSection = () => {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8 }}
             >
-                <div className="section-label text-[#00FF94] font-mono text-sm tracking-widest mb-4">SECRET SAUCE</div>
+                <motion.div
+                    className="section-label text-[#00FF94] font-mono text-sm tracking-widest mb-4 inline-block cursor-pointer"
+                    whileHover={{
+                        scale: 1.1,
+                        textShadow: "0 0 8px rgb(0, 255, 148)",
+                        color: "#ffffff"
+                    }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                    SECRET SAUCE
+                </motion.div>
                 <h2 className="section-title text-5xl font-bold mb-4">What Makes Us Different</h2>
             </motion.div>
 

@@ -46,7 +46,7 @@ const AuroraBackground = () => {
                 <div
                     className="absolute inset-0"
                     style={{
-                        background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%)'
+                        background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.1) 100%)'
                     }}
                 />
             </div>

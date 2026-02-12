@@ -20,7 +20,7 @@ const HeroSection = ({ onStartAnalysis }) => {
                 {/* Projector Beam Effect */}
                 {isHovered && (
                     <>
-                        <div className="projector-beam"></div>
+
                         <div className="projector-ticker-wrapper">
                             <MarketTicker />
                         </div>

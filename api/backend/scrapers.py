@@ -11,7 +11,6 @@ from datetime import datetime
 
 
 # ============================================================================
-<<<<<<< HEAD
 # ============================================================================
 # ============================================================================
 # 1. STOCK PRICE SCRAPER (yfinance + Twelve Data)
@@ -186,62 +185,6 @@ def get_price_twelve_data(ticker: str, api_key: str) -> Optional[Dict]:
     except Exception as e:
         print(f"[TwelveData] Exception: {e}")
         return None
-=======
-# 1. STOCK PRICE SCRAPER (yfinance)
-# ============================================================================
-def get_stock_price(ticker: str) -> Dict:
-    """
-    Fetch current stock price and metadata using yfinance.
-    Returns dict with price, change, currency, etc.
-    """
-    try:
-        import yfinance as yf
-        
-        stock = yf.Ticker(ticker)
-        info = stock.info
-        
-        # Get current price
-        current_price = info.get('currentPrice') or info.get('regularMarketPrice') or info.get('previousClose')
-        
-        if current_price is None:
-            # Try getting from history
-            hist = stock.history(period="1d")
-            if not hist.empty:
-                current_price = round(hist['Close'].iloc[-1], 2)
-            else:
-                return {"error": "No price data available", "price": None}
-        
-        # Calculate change percentage
-        prev_close = info.get('previousClose') or info.get('regularMarketPreviousClose')
-        change_percent = 0.0
-        if prev_close and current_price:
-            change_percent = round(((current_price - prev_close) / prev_close) * 100, 2)
-        
-        # Determine currency
-        currency = "₹" if (".NS" in ticker.upper() or ".BO" in ticker.upper()) else "$"
-        
-        return {
-            "price": round(float(current_price), 2),
-            "change_percent": change_percent,
-            "is_up": change_percent >= 0,
-            "currency": currency,
-            "name": info.get('shortName') or info.get('longName') or ticker,
-            "market_cap": info.get('marketCap'),
-            "volume": info.get('volume'),
-            "day_high": info.get('dayHigh'),
-            "day_low": info.get('dayLow'),
-            "52_week_high": info.get('fiftyTwoWeekHigh'),
-            "52_week_low": info.get('fiftyTwoWeekLow'),
-        }
-        
-    except Exception as e:
-        print(f"[SCRAPER ERROR] get_stock_price({ticker}): {str(e)}")
-        return {
-            "error": str(e),
-            "price": None,
-            "currency": "₹" if (".NS" in ticker.upper() or ".BO" in ticker.upper()) else "$"
-        }
->>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 
 
 # ============================================================================
@@ -398,7 +341,6 @@ def _quick_sentiment(text: str) -> str:
 
 
 # ============================================================================
-<<<<<<< HEAD
 # 5. HISTORICAL DATA SCRAPER (Graph)
 # ============================================================================
 def get_historical_data(ticker: str, period: str = "1mo") -> Dict:
@@ -458,9 +400,6 @@ def get_historical_data(ticker: str, period: str = "1mo") -> Dict:
 
 # ============================================================================
 # 6. COMBINED DATA FETCHER
-=======
-# 4. COMBINED DATA FETCHER
->>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 # ============================================================================
 def fetch_all_data(ticker: str) -> Dict:
     """
@@ -471,17 +410,13 @@ def fetch_all_data(ticker: str) -> Dict:
         "ticker": ticker.upper(),
         "timestamp": datetime.now().isoformat(),
         "price_data": get_stock_price(ticker),
-<<<<<<< HEAD
         "graph_data": get_historical_data(ticker),
-=======
->>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
         "news": get_news(ticker),
         "social": get_reddit_posts(ticker)
     }
 
 
 # ============================================================================
-<<<<<<< HEAD
 # 7. MOCK TWITTER SCRAPER (Flashcards)
 # ============================================================================
 def get_mock_tweets(ticker: str) -> List[Dict]:
@@ -558,20 +493,13 @@ def get_mock_tweets(ticker: str) -> List[Dict]:
     return tweets
 
 # ============================================================================
-=======
->>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
 # EXPORTS
 # ============================================================================
 __all__ = [
     'get_stock_price',
-<<<<<<< HEAD
     'get_historical_data',
     'get_news', 
     'get_reddit_posts',
     'get_mock_tweets',
-=======
-    'get_news', 
-    'get_reddit_posts',
->>>>>>> 5975cd6370f8958f548059bc3406ee08e2ffe68b
     'fetch_all_data'
 ]
