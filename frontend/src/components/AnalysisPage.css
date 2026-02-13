@@ -1,7 +1,7 @@
 /* Analysis Page Custom CSS */
 /* Based on User Provided Design */
+/* SCOPED TO .analysis-container TO PREVENT LEAKS */
 
-/* Import Fonts if not in index.html, but usually better in index.html */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 .analysis-container {
@@ -16,7 +16,7 @@
 }
 
 /* Header */
-.analysis-header {
+.analysis-container .analysis-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -36,13 +36,13 @@
     }
 }
 
-.header-left {
+.analysis-container .header-left {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.back-button {
+.analysis-container .back-button {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -56,23 +56,23 @@
     border: none;
 }
 
-.back-button:hover {
+.analysis-container .back-button:hover {
     color: rgba(255, 255, 255, 0.9);
     transform: translateX(-4px);
 }
 
-.back-button svg {
+.analysis-container .back-button svg {
     width: 16px;
     height: 16px;
 }
 
-.ticker-info {
+.analysis-container .ticker-info {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.ticker-text {
+.analysis-container .ticker-text {
     font-size: 52px;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -82,7 +82,7 @@
     background-clip: text;
 }
 
-.exchange-badge {
+.analysis-container .exchange-badge {
     padding: 6px 12px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -94,7 +94,7 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-.company-name {
+.analysis-container .company-name {
     font-size: 13px;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.4);
@@ -102,14 +102,14 @@
     text-transform: uppercase;
 }
 
-.header-right {
+.analysis-container .header-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 12px;
 }
 
-.live-indicator {
+.analysis-container .live-indicator {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -125,7 +125,7 @@
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
 }
 
-.live-dot {
+.analysis-container .live-dot {
     width: 6px;
     height: 6px;
     background: #10B981;
@@ -148,11 +148,11 @@
     }
 }
 
-.price-display {
+.analysis-container .price-display {
     text-align: right;
 }
 
-.price-value {
+.analysis-container .price-value {
     font-family: 'JetBrains Mono', monospace;
     font-size: 44px;
     font-weight: 700;
@@ -163,7 +163,7 @@
     background-clip: text;
 }
 
-.price-change {
+.analysis-container .price-change {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -177,19 +177,19 @@
     color: #10B981;
 }
 
-.price-change.negative {
+.analysis-container .price-change.negative {
     background: rgba(239, 68, 68, 0.12);
     border-color: rgba(239, 68, 68, 0.3);
     color: #EF4444;
 }
 
-.price-change svg {
+.analysis-container .price-change svg {
     width: 13px;
     height: 13px;
 }
 
 /* Glass Card Base */
-.glass-card {
+.analysis-container .glass-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
@@ -203,7 +203,7 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card::before {
+.analysis-container .glass-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -224,13 +224,13 @@
     }
 }
 
-.glass-card:hover {
+.analysis-container .glass-card:hover {
     border-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
 }
 
 /* Gemini Recommendation Card */
-.gemini-card {
+.analysis-container .gemini-card {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
 }
 
@@ -246,14 +246,14 @@
     }
 }
 
-.card-header {
+.analysis-container .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 32px;
 }
 
-.gemini-brand {
+.analysis-container .gemini-brand {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -268,12 +268,12 @@
     color: #06B6D4;
 }
 
-.gemini-brand svg {
+.analysis-container .gemini-brand svg {
     width: 16px;
     height: 16px;
 }
 
-.confidence {
+.analysis-container .confidence {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -281,7 +281,7 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
-.confidence span {
+.analysis-container .confidence span {
     font-family: 'JetBrains Mono', monospace;
     font-size: 16px;
     font-weight: 700;
@@ -290,20 +290,20 @@
 }
 
 /* Strong Buy Section */
-.recommendation-display {
+.analysis-container .recommendation-display {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 36px;
 }
 
-.recommendation-text {
+.analysis-container .recommendation-text {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.strong-buy {
+.analysis-container .strong-buy {
     display: inline-flex;
     align-items: center;
     gap: 12px;
@@ -316,20 +316,20 @@
     background-clip: text;
 }
 
-.strong-buy.sell {
+.analysis-container .strong-buy.sell {
     background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.strong-buy.wait {
+.analysis-container .strong-buy.wait {
     background: linear-gradient(135deg, #F59E0B 0%, #B45309 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 
-.recommendation-dot {
+.analysis-container .recommendation-dot {
     width: 12px;
     height: 12px;
     background: #10B981;
@@ -338,94 +338,94 @@
     animation: pulse 2s ease-in-out infinite;
 }
 
-.strong-buy.sell .recommendation-dot {
+.analysis-container .strong-buy.sell .recommendation-dot {
     background: #EF4444;
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
 }
 
-.strong-buy.wait .recommendation-dot {
+.analysis-container .strong-buy.wait .recommendation-dot {
     background: #F59E0B;
     box-shadow: 0 0 20px rgba(245, 158, 11, 0.8);
 }
 
 
-.recommendation-underline {
+.analysis-container .recommendation-underline {
     width: 80px;
     height: 3px;
     background: linear-gradient(90deg, #10B981, transparent);
     border-radius: 3px;
 }
 
-.strong-buy.sell+.recommendation-underline {
+.analysis-container .strong-buy.sell+.recommendation-underline {
     background: linear-gradient(90deg, #EF4444, transparent);
 }
 
-.strong-buy.wait+.recommendation-underline {
+.analysis-container .strong-buy.wait+.recommendation-underline {
     background: linear-gradient(90deg, #F59E0B, transparent);
 }
 
 
-.recommendation-subtext {
+.analysis-container .recommendation-subtext {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
     margin-top: 8px;
 }
 
-.mini-chart {
+.analysis-container .mini-chart {
     display: flex;
     align-items: flex-end;
     gap: 4px;
     height: 60px;
 }
 
-.bar {
+.analysis-container .bar {
     width: 8px;
     background: rgba(16, 185, 129, 0.3);
     border-radius: 4px;
     transition: all 0.3s ease;
 }
 
-.bar.active {
+.analysis-container .bar.active {
     background: #10B981;
     box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
 }
 
-.bar:nth-child(1) {
+.analysis-container .bar:nth-child(1) {
     height: 20%;
 }
 
-.bar:nth-child(2) {
+.analysis-container .bar:nth-child(2) {
     height: 30%;
 }
 
-.bar:nth-child(3) {
+.analysis-container .bar:nth-child(3) {
     height: 45%;
 }
 
-.bar:nth-child(4) {
+.analysis-container .bar:nth-child(4) {
     height: 60%;
 }
 
-.bar:nth-child(5) {
+.analysis-container .bar:nth-child(5) {
     height: 80%;
 }
 
-.bar:nth-child(6) {
+.analysis-container .bar:nth-child(6) {
     height: 95%;
 }
 
-.bar:nth-child(7) {
+.analysis-container .bar:nth-child(7) {
     height: 100%;
 }
 
 /* Metrics Grid */
-.metrics-row {
+.analysis-container .metrics-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
 
-.metric-box {
+.analysis-container .metric-box {
     padding: 24px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -433,13 +433,13 @@
     transition: all 0.3s ease;
 }
 
-.metric-box:hover {
+.analysis-container .metric-box:hover {
     background: rgba(255, 255, 255, 0.04);
     border-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
 }
 
-.metric-label {
+.analysis-container .metric-label {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -448,46 +448,46 @@
     margin-bottom: 12px;
 }
 
-.metric-value {
+.analysis-container .metric-value {
     font-family: 'JetBrains Mono', monospace;
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 6px;
 }
 
-.metric-box:nth-child(1) .metric-value {
+.analysis-container .metric-box:nth-child(1) .metric-value {
     color: #10B981;
 }
 
-.metric-subtext {
+.analysis-container .metric-subtext {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.5);
 }
 
-.metric-subtext.positive {
+.analysis-container .metric-subtext.positive {
     color: #10B981;
 }
 
 /* Gemini's Take */
-.gemini-take {
+.analysis-container .gemini-take {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
 }
 
-.section-header {
+.analysis-container .section-header {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 24px;
 }
 
-.section-icon {
+.analysis-container .section-icon {
     width: 18px;
     height: 18px;
     stroke: rgba(255, 255, 255, 0.6);
     stroke-width: 2;
 }
 
-.section-title {
+.analysis-container .section-title {
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -495,7 +495,7 @@
     color: rgba(255, 255, 255, 0.6);
 }
 
-.verdict-box {
+.analysis-container .verdict-box {
     padding: 28px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -503,7 +503,7 @@
     border-radius: 12px;
 }
 
-.verdict-icon {
+.analysis-container .verdict-icon {
     width: 48px;
     height: 48px;
     background: rgba(167, 139, 250, 0.12);
@@ -515,27 +515,27 @@
     margin-bottom: 20px;
 }
 
-.verdict-icon svg {
+.analysis-container .verdict-icon svg {
     width: 22px;
     height: 22px;
     stroke: #A78BFA;
     stroke-width: 2;
 }
 
-.verdict-title {
+.analysis-container .verdict-title {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 12px;
 }
 
-.verdict-text {
+.analysis-container .verdict-text {
     font-size: 14px;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 16px;
 }
 
-.verdict-footer {
+.analysis-container .verdict-footer {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -543,24 +543,24 @@
     color: rgba(255, 255, 255, 0.35);
 }
 
-.verdict-footer svg {
+.analysis-container .verdict-footer svg {
     width: 14px;
     height: 14px;
 }
 
 /* Quick Insights */
-.quick-insights {
+.analysis-container .quick-insights {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
 }
 
-.carousel-dots {
+.analysis-container .carousel-dots {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 24px;
 }
 
-.carousel-dot {
+.analysis-container .carousel-dot {
     width: 40px;
     height: 4px;
     background: rgba(255, 255, 255, 0.15);
@@ -569,12 +569,12 @@
     cursor: pointer;
 }
 
-.carousel-dot.active {
+.analysis-container .carousel-dot.active {
     width: 56px;
     background: rgba(255, 255, 255, 0.6);
 }
 
-.insight-card {
+.analysis-container .insight-card {
     padding: 28px;
     background: rgba(245, 158, 11, 0.08);
     border: 1px solid rgba(245, 158, 11, 0.25);
@@ -582,14 +582,14 @@
     margin-bottom: 24px;
 }
 
-.insight-header {
+.analysis-container .insight-header {
     display: flex;
     align-items: flex-start;
     gap: 18px;
     margin-bottom: 14px;
 }
 
-.insight-icon {
+.analysis-container .insight-icon {
     width: 52px;
     height: 52px;
     background: rgba(245, 158, 11, 0.15);
@@ -601,38 +601,38 @@
     flex-shrink: 0;
 }
 
-.insight-icon svg {
+.analysis-container .insight-icon svg {
     width: 24px;
     height: 24px;
     stroke: #F59E0B;
     stroke-width: 2;
 }
 
-.insight-title {
+.analysis-container .insight-title {
     font-size: 20px;
     font-weight: 600;
 }
 
-.insight-description {
+.analysis-container .insight-description {
     font-size: 14px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.6);
 }
 
-.stats-grid {
+.analysis-container .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
-.stat-item {
+.analysis-container .stat-item {
     padding: 24px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
 }
 
-.stat-label {
+.analysis-container .stat-label {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -644,30 +644,30 @@
     margin-bottom: 14px;
 }
 
-.stat-label svg {
+.analysis-container .stat-label svg {
     width: 14px;
     height: 14px;
 }
 
-.stat-value {
+.analysis-container .stat-value {
     font-family: 'JetBrains Mono', monospace;
     font-size: 32px;
     font-weight: 700;
 }
 
 /* Market Sentiment */
-.sentiment-card {
+.analysis-container .sentiment-card {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
 }
 
-.sentiment-display {
+.analysis-container .sentiment-display {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.sentiment-value {
+.analysis-container .sentiment-value {
     font-family: 'JetBrains Mono', monospace;
     font-size: 32px;
     font-weight: 700;
@@ -677,7 +677,7 @@
     background-clip: text;
 }
 
-.sentiment-bar-container {
+.analysis-container .sentiment-bar-container {
     position: relative;
     height: 12px;
     background: rgba(239, 68, 68, 0.2);
@@ -686,7 +686,7 @@
     margin-bottom: 16px;
 }
 
-.sentiment-bar-fill {
+.analysis-container .sentiment-bar-fill {
     position: absolute;
     left: 0;
     top: 0;
@@ -698,7 +698,7 @@
     transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.sentiment-labels {
+.analysis-container .sentiment-labels {
     display: flex;
     justify-content: space-between;
     font-size: 10px;
@@ -707,31 +707,31 @@
     text-transform: uppercase;
 }
 
-.sentiment-labels span:nth-child(1) {
+.analysis-container .sentiment-labels span:nth-child(1) {
     color: #EF4444;
 }
 
-.sentiment-labels span:nth-child(2) {
+.analysis-container .sentiment-labels span:nth-child(2) {
     color: #F59E0B;
 }
 
-.sentiment-labels span:nth-child(3) {
+.analysis-container .sentiment-labels span:nth-child(3) {
     color: #10B981;
 }
 
 /* Community Sentiment */
-.community-card {
+.analysis-container .community-card {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s backwards;
 }
 
-.tweets-container {
+.analysis-container .tweets-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
     margin-top: 20px;
 }
 
-.tweet-card {
+.analysis-container .tweet-card {
     padding: 20px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -740,12 +740,12 @@
     transition: all 0.3s ease;
 }
 
-.tweet-card:hover {
+.analysis-container .tweet-card:hover {
     background: rgba(255, 255, 255, 0.04);
     transform: translateY(-2px);
 }
 
-.tweet-source {
+.analysis-container .tweet-source {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -755,43 +755,43 @@
     color: #1DA1F2;
 }
 
-.tweet-source svg {
+.analysis-container .tweet-source svg {
     width: 16px;
     height: 16px;
 }
 
-.tweet-content {
+.analysis-container .tweet-content {
     font-size: 13px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
 }
 
 /* Alpha Signals */
-.signals-card {
+.analysis-container .signals-card {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
 }
 
-.signals-header {
+.analysis-container .signals-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
 }
 
-.signals-title {
+.analysis-container .signals-title {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.lightning-icon {
+.analysis-container .lightning-icon {
     width: 18px;
     height: 18px;
     stroke: #3B82F6;
     stroke-width: 2;
 }
 
-.refresh-button {
+.analysis-container .refresh-button {
     width: 32px;
     height: 32px;
     background: rgba(255, 255, 255, 0.04);
@@ -804,19 +804,19 @@
     transition: all 0.3s ease;
 }
 
-.refresh-button:hover {
+.analysis-container .refresh-button:hover {
     background: rgba(255, 255, 255, 0.08);
     transform: rotate(90deg);
 }
 
-.refresh-button svg {
+.analysis-container .refresh-button svg {
     width: 16px;
     height: 16px;
     stroke: rgba(255, 255, 255, 0.6);
     stroke-width: 2;
 }
 
-.signal-item {
+.analysis-container .signal-item {
     padding: 20px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -826,42 +826,42 @@
     transition: all 0.3s ease;
 }
 
-.signal-item:hover {
+.analysis-container .signal-item:hover {
     background: rgba(255, 255, 255, 0.04);
     border-left-color: #60A5FA;
     transform: translateX(4px);
 }
 
-.signal-title {
+.analysis-container .signal-title {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 8px;
 }
 
-.signal-description {
+.analysis-container .signal-description {
     font-size: 13px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.5);
 }
 
 /* Price Action Chart */
-.chart-card {
+.analysis-container .chart-card {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s backwards;
 }
 
-.chart-header {
+.analysis-container .chart-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
 }
 
-.timeframe-tabs {
+.analysis-container .timeframe-tabs {
     display: flex;
     gap: 8px;
 }
 
-.timeframe-tab {
+.analysis-container .timeframe-tab {
     padding: 8px 16px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -874,18 +874,18 @@
     transition: all 0.3s ease;
 }
 
-.timeframe-tab:hover {
+.analysis-container .timeframe-tab:hover {
     background: rgba(255, 255, 255, 0.06);
     color: rgba(255, 255, 255, 0.7);
 }
 
-.timeframe-tab.active {
+.analysis-container .timeframe-tab.active {
     background: rgba(16, 185, 129, 0.15);
     border-color: rgba(16, 185, 129, 0.3);
     color: #10B981;
 }
 
-.chart-wrapper {
+.analysis-container .chart-wrapper {
     height: 280px;
     padding: 24px;
     background: rgba(0, 0, 0, 0.3);
@@ -894,7 +894,7 @@
     position: relative;
 }
 
-.chart-wrapper::before {
+.analysis-container .chart-wrapper::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -905,18 +905,18 @@
     pointer-events: none;
 }
 
-.chart-svg {
+.analysis-container .chart-svg {
     width: 100%;
     height: 100%;
     overflow: visible;
 }
 
 /* Your Position */
-.position-card {
+.analysis-container .position-card {
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s backwards;
 }
 
-.position-header {
+.analysis-container .position-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -925,50 +925,50 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.position-label {
+.analysis-container .position-label {
     font-size: 14px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.6);
 }
 
-.position-value {
+.analysis-container .position-value {
     font-family: 'JetBrains Mono', monospace;
     font-size: 36px;
     font-weight: 700;
 }
 
-.position-stats {
+.analysis-container .position-stats {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
-.position-stat {
+.analysis-container .position-stat {
     padding: 24px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
 }
 
-.stat-name {
+.analysis-container .stat-name {
     font-size: 12px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.5);
     margin-bottom: 10px;
 }
 
-.stat-amount {
+.analysis-container .stat-amount {
     font-family: 'JetBrains Mono', monospace;
     font-size: 24px;
     font-weight: 700;
 }
 
-.position-stat.profit .stat-amount {
+.analysis-container .position-stat.profit .stat-amount {
     color: #10B981;
 }
 
 /* Analyst Tab */
-.analyst-tab {
+.analysis-container .analyst-tab {
     margin-top: 32px;
     padding: 20px 32px;
     background: rgba(255, 255, 255, 0.04);
@@ -985,7 +985,7 @@
     animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s backwards;
 }
 
-.analyst-tab:hover {
+.analysis-container .analyst-tab:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.12);
     color: rgba(255, 255, 255, 0.9);
@@ -993,15 +993,15 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .metrics-row {
+    .analysis-container .metrics-row {
         grid-template-columns: 1fr;
     }
 
-    .stats-grid {
+    .analysis-container .stats-grid {
         grid-template-columns: 1fr;
     }
 
-    .tweets-container {
+    .analysis-container .tweets-container {
         grid-template-columns: 1fr;
     }
 }
@@ -1020,25 +1020,25 @@
         align-items: flex-start;
     }
 
-    .ticker-text {
+    .analysis-container .ticker-text {
         font-size: 38px;
     }
 
-    .price-value {
+    .analysis-container .price-value {
         font-size: 32px;
     }
 
-    .strong-buy {
+    .analysis-container .strong-buy {
         font-size: 32px;
     }
 
-    .recommendation-display {
+    .analysis-container .recommendation-display {
         flex-direction: column;
         align-items: flex-start;
         gap: 24px;
     }
 
-    .position-stats {
+    .analysis-container .position-stats {
         grid-template-columns: 1fr;
     }
 }
